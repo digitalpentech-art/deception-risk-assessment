@@ -1,5 +1,7 @@
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+import tensorflow as tf
+# Explicitly disable GPU usage for TensorFlow before any other operations
+tf.config.set_visible_devices([], 'GPU')
+
 from flask import Flask, request, jsonify, send_from_directory
 from src.models.face_emotion_model import build_face_emotion_model
 from src.models.speech_emotion_model import build_speech_emotion_model
