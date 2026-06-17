@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from src.models.face_emotion_model import build_face_emotion_model
 from src.models.speech_emotion_model import build_speech_emotion_model
 from src.models.voice_stress_model import build_voice_stress_model
 from src.models.micro_model import build_micro_expression_model
 from src.models.risk_engine import assess_risk
 import random
+import os
 
 app = Flask(__name__)
 
@@ -16,7 +17,7 @@ micro_model = build_micro_expression_model()
 
 @app.route('/')
 def index():
-    return "System is running. API endpoints: /predict (POST), /report (GET)"
+    return send_from_directory(os.path.join(app.root_path, '..', 'frontend'), 'index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
