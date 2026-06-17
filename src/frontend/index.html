@@ -1,17 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Behavioral Risk Assessment Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Multimodal Deception Risk Assessment</h1>
-    <input type="file" id="videoInput">
-    <button onclick="analyze()">Analyze</button>
-    <div id="results"></div>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Multimodal Deception Risk Assessment</h1>
+        <div class="card p-4 shadow">
+            <div class="mb-3">
+                <label for="videoInput" class="form-label">Upload Video</label>
+                <input type="file" class="form-control" id="videoInput" accept="video/*">
+            </div>
+            <div class="mb-3">
+                <label for="audioInput" class="form-label">Upload Audio</label>
+                <input type="file" class="form-control" id="audioInput" accept="audio/*">
+            </div>
+            <button class="btn btn-primary w-100" onclick="analyze()">Analyze Behavioral Risk</button>
+        </div>
+        <div id="results" class="mt-4 card p-4 shadow d-none">
+            <h3>Analysis Results</h3>
+            <p id="riskLevel" class="h4"></p>
+            <p id="confidence"></p>
+            <pre id="breakdown"></pre>
+        </div>
+    </div>
+
     <script>
-        function analyze() {
-            // Placeholder for API call to /predict
-            document.getElementById('results').innerText = "Analyzing...";
+        async function analyze() {
+            const videoFile = document.getElementById('videoInput').files[0];
+            const audioFile = document.getElementById('audioInput').files[0];
+
+            if (!videoFile || !audioFile) {
+                alert("Please upload both video and audio files.");
+                return;
+            }
+
+            document.getElementById('results').classList.remove('d-none');
+            document.getElementById('riskLevel').innerText = "Analyzing...";
+
+            // In a real scenario, use FormData to send files
+            const formData = new FormData();
+            formData.append('video', videoFile);
+            formData.append('audio', audioFile);
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                
+                document.getElementById('riskLevel').innerText = "Risk Level: " + result.risk_level;
+                document.getElementById('confidence').innerText = "Confidence: " + (result.confidence * 100).toFixed(2) + "%";
+                document.getElementById('breakdown').innerText = JSON.stringify(result.detailed_breakdown, null, 2);
+            } catch (error) {
+                alert("Error during analysis: " + error);
+            }
         }
     </script>
 </body>
