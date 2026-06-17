@@ -1,6 +1,5 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-
 import numpy as np
 from src.data_preprocessing.preprocess_speech import extract_speech_features
 from src.models.speech_emotion_model import build_speech_emotion_model

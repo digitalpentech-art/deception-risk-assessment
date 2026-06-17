@@ -1,6 +1,5 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-
 import numpy as np
 import os
 from src.models.voice_stress_model import build_voice_stress_model

@@ -1,16 +1,12 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-
 import numpy as np
 import os
 from src.data_preprocessing.preprocess_faces import preprocess_face
 from src.models.face_emotion_model import build_face_emotion_model
 
 def train_and_save():
-    # 1. Load your dataset (e.g., list of image paths and labels)
-    # 2. X = np.array([preprocess_face(path) for path in paths])
-    
-    # Placeholder for shape verification
+    # Placeholder for shape verification (10 images, 224x224, 3 channels)
     X = np.random.rand(10, 224, 224, 3)
     y = np.random.rand(10, 7) # 7 classes for FER2013
 
