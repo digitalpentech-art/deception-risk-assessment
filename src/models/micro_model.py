@@ -1,16 +1,16 @@
 import tensorflow as tf
+import tensorflow_hub as hub
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv3D, MaxPooling3D, Flatten, Dense, Dropout
+from tensorflow.keras.layers import Dense, Dropout, Flatten
 
-def build_micro_expression_model(input_shape=(16, 112, 112, 3), num_classes=5):
+def build_micro_expression_model(num_classes=5):
     """
-    Realistic 3D CNN model for micro-expression classification.
+    Builds a Micro-expression model using I3D Kinetics-400 pre-trained model.
     """
+    i3d_model = hub.KerasLayer("https://tfhub.dev/deepmind/i3d-kinetics-400/1", trainable=False)
+    
     model = Sequential([
-        Conv3D(32, (3, 3, 3), activation='relu', input_shape=input_shape),
-        MaxPooling3D((2, 2, 2)),
-        Conv3D(64, (3, 3, 3), activation='relu'),
-        MaxPooling3D((2, 2, 2)),
+        i3d_model,
         Flatten(),
         Dense(128, activation='relu'),
         Dropout(0.5),
