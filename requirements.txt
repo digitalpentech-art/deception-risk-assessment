@@ -1,0 +1,8 @@
+flask
+tensorflow
+opencv-python-headless
+librosa
+numpy
+pillow
+shap
+gunicorn
