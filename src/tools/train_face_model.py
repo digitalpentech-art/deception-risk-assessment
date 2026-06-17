@@ -1,3 +1,6 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 import numpy as np
 import os
 from src.data_preprocessing.preprocess_faces import preprocess_face

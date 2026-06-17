@@ -1,3 +1,5 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from flask import Flask, request, jsonify, send_from_directory
 from src.models.face_emotion_model import build_face_emotion_model
 from src.models.speech_emotion_model import build_speech_emotion_model
