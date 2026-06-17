@@ -14,6 +14,10 @@ speech_model = build_speech_emotion_model()
 voice_model = build_voice_stress_model()
 micro_model = build_micro_expression_model()
 
+@app.route('/')
+def index():
+    return "System is running. API endpoints: /predict (POST), /report (GET)"
+
 @app.route('/predict', methods=['POST'])
 def predict():
     # Simulate inference
